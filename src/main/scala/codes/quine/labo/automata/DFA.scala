@@ -1,9 +1,7 @@
 package codes.quine.labo.automata
 
-import scala.collection.mutable
 import scala.collection.MultiDict
-
-import FiniteAutomata._
+import scala.collection.mutable
 
 final case class DFA[Q, A](delta: Map[(Q, A), Q], i: Q, F: Set[Q]) {
   lazy val Q: Set[Q] = delta.keySet.map(_._1).toSet | delta.values.toSet | Set(i) | F
@@ -17,7 +15,7 @@ final case class DFA[Q, A](delta: Map[(Q, A), Q], i: Q, F: Set[Q]) {
 }
 
 object DFA extends DFAInstances0 {
-  def from[FA](fa: FA)(implicit FA: FiniteAutomata[FA]): DFA[FA.State, FA.Alphabet] = {
+  def from[FA](fa: FA)(implicit FA: FiniteAutomaton[FA]): DFA[FA.State, FA.Alphabet] = {
     type Q = FA.State
     type A = FA.Alphabet
 
@@ -62,8 +60,8 @@ object DFA extends DFAInstances0 {
 }
 
 private[automata] trait DFAInstances0 {
-  private[this] val FAInstanceForDFAAny: FiniteAutomata[DFA[Any, Any]] =
-    new FiniteAutomata[DFA[Any, Any]] {
+  private[this] val FAInstanceForDFAAny: FiniteAutomaton[DFA[Any, Any]] =
+    new FiniteAutomaton[DFA[Any, Any]] {
       type State = Option[Any]
       type Alphabet = Any
       def stateSet(fa: DFA[Any, Any]): Set[State] = fa.Q.map(Option(_)) | Set(None)
@@ -75,6 +73,6 @@ private[automata] trait DFAInstances0 {
         q.exists(fa.F.contains(_))
     }
 
-  implicit def FAInstanceForDFA[Q, A]: FiniteAutomata[DFA[Q, A]] =
-    FAInstanceForDFAAny.asInstanceOf[FiniteAutomata[DFA[Q, A]]]
+  implicit def FAInstanceForDFA[Q, A]: FiniteAutomaton[DFA[Q, A]] =
+    FAInstanceForDFAAny.asInstanceOf[FiniteAutomaton[DFA[Q, A]]]
 }

@@ -1,6 +1,6 @@
 package codes.quine.labo.automata
 
-trait FiniteAutomata[FA] {
+trait FiniteAutomaton[FA] {
   type State
   type Alphabet
   def stateSet(fa: FA): Set[State]
@@ -10,8 +10,8 @@ trait FiniteAutomata[FA] {
   def isAcceptState(fa: FA)(q: State): Boolean
 }
 
-object FiniteAutomata {
-  type Aux[FA, Q, A] = FiniteAutomata[FA] {
+object FiniteAutomaton {
+  type Aux[FA, Q, A] = FiniteAutomaton[FA] {
     type State = Q
     type Alphabet = A
   }

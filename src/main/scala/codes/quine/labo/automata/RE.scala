@@ -60,10 +60,10 @@ object RE extends REInstances0 {
     re match {
       case Fail          => false
       case Empty         => true
-      case Atom(a)       => false
+      case Atom(_)       => false
       case Cat(re1, re2) => isEmpty(re1) && isEmpty(re2)
       case Alt(re1, re2) => isEmpty(re1) || isEmpty(re2)
-      case Star(re)      => true
+      case Star(_)       => true
     }
 
   def derivate[A](re: RE[A], a: A): RE[A] =
@@ -107,17 +107,16 @@ private[automata] trait REInstances0 extends REInstances1 {
       }
     }
 
-  implicit def FAInstanceForREWithOrdering[A: Ordering]: FiniteAutomata.Aux[RE[A], RE[A], A] =
+  implicit def FAInstanceForREWithOrdering[A: Ordering]: FiniteAutomaton.Aux[RE[A], RE[A], A] =
     new FAInstanceForREImpl(RE.normalizeWithOrdering(_))
 }
 
 private[automata] trait REInstances1 {
-  implicit def FAInstanceForRE[A]: FiniteAutomata.Aux[RE[A], RE[A], A] =
+  implicit def FAInstanceForRE[A]: FiniteAutomaton.Aux[RE[A], RE[A], A] =
     new FAInstanceForREImpl(RE.normalize(_))
 }
 
-private[automata] final class FAInstanceForREImpl[A](val normalize: RE[A] => RE[A])
-    extends FiniteAutomata[RE[A]] {
+private[automata] final class FAInstanceForREImpl[A](val normalize: RE[A] => RE[A]) extends FiniteAutomaton[RE[A]] {
   type State = RE[A]
   type Alphabet = A
   def alphabet(re: RE[A]): Set[A] = RE.alphabet(re)

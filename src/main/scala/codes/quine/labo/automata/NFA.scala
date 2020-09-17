@@ -19,11 +19,11 @@ object NFA extends NFAInstances0 {
 }
 
 private[automata] trait NFAInstances0 {
-  private[this] val FAInsranceForNFAAny: FiniteAutomata.Aux[NFA[Any, Any], Set[Any], Any] =
-    new FiniteAutomata[NFA[Any, Any]] {
+  private[this] val FAInsranceForNFAAny: FiniteAutomaton.Aux[NFA[Any, Any], Set[Any], Any] =
+    new FiniteAutomaton[NFA[Any, Any]] {
       type State = Set[Any]
       type Alphabet = Any
-      def stateSet(fa: NFA[Any, Any]): Set[State] = fa.Q.subsets.toSet
+      def stateSet(fa: NFA[Any, Any]): Set[State] = fa.Q.subsets().toSet
       def alphabet(fa: NFA[Any, Any]): Set[Alphabet] = fa.Sigma
       def transition(fa: NFA[Any, Any])(q: State, a: Alphabet): State =
         q.flatMap(q => fa.delta.get((q, a)))
@@ -31,6 +31,6 @@ private[automata] trait NFAInstances0 {
       def isAcceptState(fa: NFA[Any, Any])(q: State): Boolean = q.exists(q => fa.F.contains(q))
     }
 
-  implicit def FAInstanceForNFA[Q, A]: FiniteAutomata.Aux[NFA[Q, A], Set[Q], A] =
-    FAInsranceForNFAAny.asInstanceOf[FiniteAutomata.Aux[NFA[Q, A], Set[Q], A]]
+  implicit def FAInstanceForNFA[Q, A]: FiniteAutomaton.Aux[NFA[Q, A], Set[Q], A] =
+    FAInsranceForNFAAny.asInstanceOf[FiniteAutomaton.Aux[NFA[Q, A], Set[Q], A]]
 }
