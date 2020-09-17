@@ -23,10 +23,10 @@ lazy val root = project
   .in(file("."))
   .settings(
     organization := "codes.quine.labo",
-    name := "template",
+    name := "automata",
     version := "0.1.0-SNAPSHOT",
     console / initialCommands := """
-      |import codes.quine.labo.template._
+      |import codes.quine.labo.automata._
       """.stripMargin,
     Compile / console / scalacOptions -= "-Wunused",
     // Set URL mapping of scala standard API for Scaladoc.
@@ -34,6 +34,8 @@ lazy val root = project
       .filter(file => file.getName.startsWith("scala-library") && file.getName.endsWith(".jar"))
       .map(_ -> url(s"http://www.scala-lang.org/api/${scalaVersion.value}/"))
       .toMap,
+    // Dependencies:
+    libraryDependencies += "org.scala-lang.modules" %% "scala-collection-contrib" % "0.2.1",
     // Settings for test:
     libraryDependencies += "io.monix" %% "minitest" % "2.8.2" % Test,
     testFrameworks += new TestFramework("minitest.runner.Framework")

@@ -1,6 +1,6 @@
-# template-scala
+# scala-automata
 
-> MakeNowJust-Labo's Scala project template.
+> Automata abstraction and implementations in Scala.
 
 ## License
 
