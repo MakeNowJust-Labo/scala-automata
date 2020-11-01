@@ -35,7 +35,7 @@ lazy val root = project
       .map(_ -> url(s"http://www.scala-lang.org/api/${scalaVersion.value}/"))
       .toMap,
     // Dependencies:
-    libraryDependencies += "org.scala-lang.modules" %% "scala-collection-contrib" % "0.2.1",
+    libraryDependencies += "org.scala-lang.modules" %% "scala-collection-contrib" % "0.2.2",
     // Settings for test:
     libraryDependencies += "io.monix" %% "minitest" % "2.8.2" % Test,
     testFrameworks += new TestFramework("minitest.runner.Framework")
